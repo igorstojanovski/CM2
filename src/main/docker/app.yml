@@ -1,0 +1,21 @@
+version: '2'
+services:
+    cm2-app:
+        image: cm2
+        external_links:
+            - cm2-postgresql:postgresql
+            - cm2-elasticsearch:elasticsearch
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/CM2
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
+        ports:
+            - 8080:8080
+    cm2-postgresql:
+        extends:
+            file: postgresql.yml
+            service: cm2-postgresql
+    cm2-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: cm2-elasticsearch
